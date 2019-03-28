@@ -26,7 +26,7 @@ DatasetTotal = prdataset(feature_training, class_training,'featlab',lista_feasur
 %Selección de características
 
  No_feasures = 8;                                        % Atributos Seleccionados
- [Ws,Rs] = featselm(DatasetTotal,'maha-s','ind',No_feasures); % Feasure Selection map
+ [Ws,Rs] = featselm(DatasetTotal,'NN','ind',No_feasures); % Feasure Selection map
  DatasetTotal = DatasetTotal*Ws;                          % Map According to Attibutes selected
  DatasetTotal.featlab
  
