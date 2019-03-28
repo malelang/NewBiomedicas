@@ -121,16 +121,8 @@ class_training=[getclass(1);getclass(3);getclass(4);getclass(5);getclass(6);getc
 
 class_testing=getclass(2);
 
-% Segunda mitad de la señal
 
-class_training=ones(240,1);
-class_training(26:29)=0;
-class_training(42:47)=0;
-class_training(55:58)=0;
-class_training(68:71)=0;
-class_training(86:88)=0;
-class_training(149:151)=0;
-class_training(192:195)=0;
+
 %% PARTE VIII: EXTRACCIÓN DEL DATASET DE ENTRENAMIENTO Y ENTRENAMIENTO DE 
 % LOS CLASIFICADORES.
 
@@ -151,4 +143,25 @@ disp('---------------------------------------------------')
 
 LABEL = labeld(Data_testing,Ws_training*PC_training*W_training{minimoerror});
 
-GetClassificationError(class_testing,LABEL);
+error=zeros(1,length(class_testing));
+for i=1:length(class_testing)
+    if(class_testing(i)~=LABEL(i))
+        error(i)=1;
+    end
+end
+
+E=100*sum(error)/length(class_testing);
+fprintf('El error de clasificación es: %d \n',E);
+
+for i=1:length(LABEL)
+    clas1=LABEL(LABEL==1);
+    clas2=LABEL(LABEL==0);
+    real1=class_testing(class_testing==1);
+    real2=class_testing(class_testing==0);
+end
+
+ec1=100*abs((sum(real1)-sum(clas1)))/length(real1);
+ec2=100*abs((sum(real2)-sum(clas2)))/length(real2);
+
+fprintf('El error de clasificación del movimiento 1 es: %d \n',ec1);
+fprintf('El error de clasificación del movimiento 2 es: %d \n',ec2);
